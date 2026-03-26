@@ -1,0 +1,52 @@
+name: 24/7 Auto-Response Bot
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  welcome-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-Response to Inquiries
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const body = `
+👋 **Welcome to HS Steel Builders Corp!**
+
+Thank you for reaching out! We appreciate your interest in our services.
+
+**📍 Location:** Manhattan, NY
+**🏢 Specialties:** 
+- Structural Steel
+- Miscellaneous Steel Work
+- Fabrication
+- Installation
+
+**📞 Phone:** 718-208-8033
+**📧 Email:** hssteelbuilders@yahoo.com
+
+---
+
+**How We Can Help:**
+Please provide details about your project:
+- Type of work needed (structural, miscellaneous, fabrication, installation)
+- Project timeline
+- Location & specifications
+- Budget range (if available)
+
+Our team will review your inquiry and respond with a custom proposal within 24 hours.
+
+**We're available 24/7** to support your steel construction needs!
+
+---
+*This is an automated response. Our expert team will personally follow up shortly.*
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
